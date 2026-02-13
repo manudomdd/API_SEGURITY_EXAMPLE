@@ -26,6 +26,8 @@ public interface LibrosService {
     Prestamo prestarLibroAPrestamo(Libro libro, Usuario usuario);
 
     void devolverLibro(Long prestamoId);
+    
+    List<Libro> buscarPorTitulo(String titulo);
 
    
 }

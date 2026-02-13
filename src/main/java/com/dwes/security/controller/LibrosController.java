@@ -85,7 +85,6 @@ import com.dwes.security.service.LibrosService;
 	    public Libro createBook(@RequestBody Libro book) {
 	        return librosService.agregarLibro(book);
 	    }
-
 	    
 
 	    // Actualizar un libro
@@ -100,5 +99,16 @@ import com.dwes.security.service.LibrosService;
 	    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	    public void deleteBook(@PathVariable Long id) {
 	        librosService.eliminarLibro(id);
+	    }
+	    
+	    // Buscar libros por título (Accesible para todos)
+	    @GetMapping("/buscar")
+	    @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')")
+	    public ResponseEntity<List<Libro>> buscarPorTitulo(@RequestParam String titulo) {
+	        List<Libro> libros = librosService.buscarPorTitulo(titulo);
+	        if (libros.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	        }
+	        return new ResponseEntity<>(libros, HttpStatus.OK);
 	    }
 	}
